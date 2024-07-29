@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-springboot-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-springboot-app
+  template:
+    metadata:
+      labels:
+        app: kafka-springboot-app
+    spec:
+      containers:
+      - name: kafka-container
+        image: your-docker-repo/kafka-springboot-app:latest
+        env:
+        - name: KAFKA_BROKER
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: KAFKA_BROKER
+        - name: CONSUMER_GROUP
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: CONSUMER_GROUP
+        - name: DEFAULT_TOPIC
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: DEFAULT_TOPIC
