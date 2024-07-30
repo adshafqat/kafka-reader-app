@@ -15,6 +15,9 @@ spec:
       containers:
       - name: kafka-container
         image: ashafqat/kafka-reader-app:v0.2
+        volumeMounts:
+        - name: client-cert
+          mountPath: /data/p12     
         env:
         - name: BOOTSTRAP_SERVERS
           valueFrom:
@@ -31,3 +34,22 @@ spec:
             configMapKeyRef:
               name: kafka-config
               key: TOPIC_NAME
+        - name: TRUSTSTORE_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: TRUSTSTORE_PASSWORD
+        - name: TRUSTSTORE_LOCATION
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: TRUSTSTORE_LOCATION
+        - name: TRUSTSTORE_TYPE
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: TRUSTSTORE_TYPE
+      volumes:
+      - name: client-cert
+        secret:
+          secretName: devops02-amq-internal-cert-key-pair

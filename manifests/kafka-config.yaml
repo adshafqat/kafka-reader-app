@@ -1,3 +1,4 @@
+apiVersion: v1 
 kind: ConfigMap
 metadata:
   name: kafka-config
@@ -5,3 +6,6 @@ data:
   BOOTSTRAP_SERVERS: "your.kafka.broker:9092"
   GROUP_ID: "GROUP_ID"
   TOPIC_NAME: "TOPIC_NAME"
+  TRUSTSTORE_PASSWORD: ""
+  TRUSTSTORE_LOCATION: "/data/p12"
+  TRUSTSTORE_TYPE: "PKCS12"

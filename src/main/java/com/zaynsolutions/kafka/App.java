@@ -10,7 +10,9 @@ public class App {
         String bootstrapServers = System.getenv("BOOTSTRAP_SERVERS");
         String topicName = System.getenv("TOPIC_NAME");
         String groupId = System.getenv("GROUP_ID");
-
+        String truststoreLocation = System.getenv("TRUSTSTORE_LOCATION");
+        String truststorePassword = System.getenv("TRUSTSTORE_PASSWORD");
+        String truststoreType = System.getenv("TRUSTSTORE_TYPE");
 
         // Validate required environment variables
         if (bootstrapServers == null || topicName == null || groupId == null) {
@@ -24,6 +26,12 @@ public class App {
         config.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         config.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         config.put("group.id", groupId);
+
+        config.put("security.potocol", "SSL");
+        config.put("ssl.truststore.location", truststoreLocation);
+        config.put("ssl.truststore.password", truststorePassword);
+        config.put("ssl.truststore.type", truststoreType);
+
 
         // Create a Kafka consumer
         KafkaConsumer<String, String> consumer = KafkaConsumer.create(Vertx.vertx(), config);
