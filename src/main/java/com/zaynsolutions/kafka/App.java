@@ -13,6 +13,8 @@ public class App {
         String truststoreLocation = System.getenv("TRUSTSTORE_LOCATION");
         String truststorePassword = System.getenv("TRUSTSTORE_PASSWORD");
         String truststoreType = System.getenv("TRUSTSTORE_TYPE");
+        String keystoreLocation = System.getenv("KEYSTORE_LOCATION");
+        String keystorePassword = System.getenv("KEYSTORE_PASSWORD");
 
         // Validate required environment variables
         if (bootstrapServers == null || topicName == null || groupId == null) {
@@ -31,8 +33,10 @@ public class App {
         config.put("ssl.truststore.location", truststoreLocation);
         config.put("ssl.truststore.password", truststorePassword);
         config.put("ssl.truststore.type", truststoreType);
+        config.put("ssl.keystore.location", keystoreLocation);
+        config.put("ssl.keystore.password", keystorePassword);
 
-
+        
         // Create a Kafka consumer
         KafkaConsumer<String, String> consumer = KafkaConsumer.create(Vertx.vertx(), config);
 
