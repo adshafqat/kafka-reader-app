@@ -3,9 +3,9 @@ kind: ConfigMap
 metadata:
   name: kafka-config
 data:
-  BOOTSTRAP_SERVERS: "your.kafka.broker:9092"
-  GROUP_ID: "GROUP_ID"
-  TOPIC_NAME: "TOPIC_NAME"
+  BOOTSTRAP_SERVERS: 'amq-devops02-instance-kafka-brokers.amq-devops02-instance.svc:9093'
+  GROUP_ID: GROUP_ID
+  TOPIC_NAME: topic1
   TRUSTSTORE_PASSWORD: ""
   TRUSTSTORE_LOCATION: "/data/p12"
   TRUSTSTORE_TYPE: "PKCS12"
