@@ -9,10 +9,12 @@ public class App {
         // Bootstrap servers and topic name
         String bootstrapServers = System.getenv("BOOTSTRAP_SERVERS");
         String topicName = System.getenv("TOPIC_NAME");
+        String groupId = System.getenv("GROUP_ID");
+
 
         // Validate required environment variables
-        if (bootstrapServers == null || topicName == null) {
-            System.err.println("Please provide values for BOOTSTRAP_SERVERS and TOPIC_NAME environment variables.");
+        if (bootstrapServers == null || topicName == null || groupId == null) {
+            System.err.println("Please provide values for BOOTSTRAP_SERVER, GROUP_ID and TOPIC_NAME environment variables.");
             return;
         }
 
@@ -21,7 +23,7 @@ public class App {
         config.put("bootstrap.servers", bootstrapServers);
         config.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         config.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        config.put("group.id", "my-consumer-group");
+        config.put("group.id", groupId);
 
         // Create a Kafka consumer
         KafkaConsumer<String, String> consumer = KafkaConsumer.create(Vertx.vertx(), config);

@@ -14,20 +14,20 @@ spec:
     spec:
       containers:
       - name: kafka-container
-        image: your-docker-repo/kafka-springboot-app:latest
+        image: ashafqat/kafka-reader-app:v0.2
         env:
-        - name: KAFKA_BROKER
+        - name: BOOTSTRAP_SERVERS
           valueFrom:
             configMapKeyRef:
               name: kafka-config
-              key: KAFKA_BROKER
-        - name: CONSUMER_GROUP
+              key: BOOTSTRAP_SERVERS
+        - name: GROUP_ID
           valueFrom:
             configMapKeyRef:
               name: kafka-config
-              key: CONSUMER_GROUP
-        - name: DEFAULT_TOPIC
+              key: GROUP_ID
+        - name: TOPIC_NAME
           valueFrom:
             configMapKeyRef:
               name: kafka-config
-              key: DEFAULT_TOPIC
+              key: TOPIC_NAME

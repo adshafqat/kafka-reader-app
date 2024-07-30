@@ -2,6 +2,6 @@ kind: ConfigMap
 metadata:
   name: kafka-config
 data:
-  KAFKA_BROKER: "your.kafka.broker:9092"
-  CONSUMER_GROUP: "your_consumer_group"
-  DEFAULT_TOPIC: "your_topic"
+  BOOTSTRAP_SERVERS: "your.kafka.broker:9092"
+  GROUP_ID: "GROUP_ID"
+  TOPIC_NAME: "TOPIC_NAME"
