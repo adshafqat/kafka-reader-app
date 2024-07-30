@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: kafka-container
-        image: ashafqat/kafka-reader-app:v0.2
+        image: jfrog.uk..com/docker-proxy/ashafqat/kafka-reader-app:v0.3
         volumeMounts:
         - name: client-cert
           mountPath: /data/p12     
