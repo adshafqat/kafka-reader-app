@@ -4,7 +4,7 @@ metadata:
   name: kafka-config
   namespace: amq-instance
 data:
-  BOOTSTRAP_SERVERS: 'amq-devops02-instance-kafka-bootstrap.amq-devops02-instance.svc:9093'
+  BOOTSTRAP_SERVERS: 'amq-instance-kafka-bootstrap.amq-instance.svc:9093'
   GROUP_ID: GROUP_ID
   TOPIC_NAME: topic1
   TRUSTSTORE_LOCATION: /data/crt/truststore.jks
