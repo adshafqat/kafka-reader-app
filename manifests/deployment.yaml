@@ -1,7 +1,8 @@
-apiVersion: apps/v1
 kind: Deployment
+apiVersion: apps/v1
 metadata:
   name: kafka-springboot-app
+  namespace: amq-devops02-instance
 spec:
   replicas: 1
   selector:
@@ -9,47 +10,65 @@ spec:
       app: kafka-springboot-app
   template:
     metadata:
+      creationTimestamp: null
       labels:
         app: kafka-springboot-app
     spec:
-      containers:
-      - name: kafka-container
-        image: jfrog.uk..com/docker-proxy/ashafqat/kafka-reader-app:v0.4
-        volumeMounts:
-        - name: client-cert
-          mountPath: /data/p12     
-        env:
-        - name: BOOTSTRAP_SERVERS
-          valueFrom:
-            configMapKeyRef:
-              name: kafka-config
-              key: BOOTSTRAP_SERVERS
-        - name: GROUP_ID
-          valueFrom:
-            configMapKeyRef:
-              name: kafka-config
-              key: GROUP_ID
-        - name: TOPIC_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: kafka-config
-              key: TOPIC_NAME
-        - name: TRUSTSTORE_PASSWORD
-          valueFrom:
-            configMapKeyRef:
-              name: kafka-config
-              key: TRUSTSTORE_PASSWORD
-        - name: TRUSTSTORE_LOCATION
-          valueFrom:
-            configMapKeyRef:
-              name: kafka-config
-              key: TRUSTSTORE_LOCATION
-        - name: TRUSTSTORE_TYPE
-          valueFrom:
-            configMapKeyRef:
-              name: kafka-config
-              key: TRUSTSTORE_TYPE
       volumes:
-      - name: client-cert
-        secret:
-          secretName: devops02-amq-internal-cert-key-pair
+        - name: client-cert
+          secret:
+            secretName: amq-devops02-instance-cluster-ca-truststore-jks
+            defaultMode: 420
+      containers:
+        - name: kafka-container
+          image: 'dockerhub.io/ashafqat/kafka-reader-app:v0.9'
+          env:
+            - name: BOOTSTRAP_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-config
+                  key: BOOTSTRAP_SERVERS
+            - name: GROUP_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-config
+                  key: GROUP_ID
+            - name: TOPIC_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-config
+                  key: TOPIC_NAME
+            - name: TRUSTSTORE_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-config
+                  key: TRUSTSTORE_PASSWORD
+            - name: TRUSTSTORE_LOCATION
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-config
+                  key: TRUSTSTORE_LOCATION
+            - name: TRUSTSTORE_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-config
+                  key: TRUSTSTORE_TYPE
+          resources: {}
+          volumeMounts:
+            - name: client-cert
+              mountPath: /data/crt
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
