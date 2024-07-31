@@ -2,7 +2,6 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: kafka-springboot-app
-  namespace: amq-devops02-instance
 spec:
   replicas: 1
   selector:
@@ -17,7 +16,7 @@ spec:
       volumes:
         - name: client-cert
           secret:
-            secretName: amq-devops02-instance-cluster-ca-truststore-jks
+            secretName: amq-instance-cluster-ca-truststore-jks
             defaultMode: 420
       containers:
         - name: kafka-container
