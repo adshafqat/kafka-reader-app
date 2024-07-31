@@ -4,7 +4,7 @@ metadata:
   annotations:
     deployment.kubernetes.io/revision: '1'
   name: kafkacat
-  namespace: amq-devops02-instance
+  namespace: amq-instance
   labels:
     run: kafkacat
 spec:
