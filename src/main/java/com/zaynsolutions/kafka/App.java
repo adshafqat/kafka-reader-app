@@ -29,6 +29,7 @@ public class App {
         config.put("group.id", groupId);
 
         config.put("security.protocol", "SSL");
+        config.put("ssl.endpoint.identification.algorithm", "");
         config.put("ssl.truststore.location", truststoreLocation);
         config.put("ssl.truststore.password", truststorePassword);
         config.put("ssl.truststore.type", truststoreType);
